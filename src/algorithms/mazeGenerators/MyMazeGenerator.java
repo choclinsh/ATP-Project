@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Random;
 
 public class MyMazeGenerator extends AMazeGenerator{
-    public MyMazeGenerator(int rows, int cols){
-        super(rows, cols);
+    public MyMazeGenerator(){
+        super();
     }
     private void add_adj_walls(Position current, List<Position> list, Maze maze) {
         int curr_row = current.getRowIndex();
@@ -17,17 +17,17 @@ public class MyMazeGenerator extends AMazeGenerator{
         }
         if (curr_row < maze.getRows() - 1) {
             if (maze.getCell(curr_row + 1, curr_col) == 1) {
-                list.add(new Position(curr_row - 1, curr_col));
+                list.add(new Position(curr_row + 1, curr_col));
             }
         }
         if (curr_col > 0) {
             if (maze.getCell(curr_row, curr_col - 1) == 1) {
-                list.add(new Position(curr_row - 1, curr_col));
+                list.add(new Position(curr_row, curr_col-1));
             }
         }
         if (curr_col < maze.getCols() - 1) {
             if (maze.getCell(curr_row, curr_col + 1) == 1) {
-                list.add(new Position(curr_row - 1, curr_col));
+                list.add(new Position(curr_row, curr_col+1));
             }
         }
     }
@@ -70,7 +70,7 @@ public class MyMazeGenerator extends AMazeGenerator{
                     }
                 }
             }
-            if (chosen_pos.getColumnIndex() > 0) {
+            if (chosen_pos.getColumnIndex() > 0 && adj_visit_counter < 2) {
                 if (maze[chosen_pos.getRowIndex()][chosen_pos.getColumnIndex()-1] == 0) {
                     adj_visit_counter++;
                     if (adj_visit_counter ==2) {
@@ -78,7 +78,7 @@ public class MyMazeGenerator extends AMazeGenerator{
                     }
                 }
             }
-            if (chosen_pos.getColumnIndex() < new_maze.getCols() - 1) {
+            if (chosen_pos.getColumnIndex() < new_maze.getCols() - 1 && adj_visit_counter < 2) {
                 if (maze[chosen_pos.getRowIndex()][chosen_pos.getColumnIndex()+1] == 0) {
                     adj_visit_counter++;
                     if (adj_visit_counter ==2) {
@@ -86,7 +86,15 @@ public class MyMazeGenerator extends AMazeGenerator{
                     }
                 }
             }
+            if (adj_visit_counter < 2) {
+                maze[chosen_pos.getRowIndex()][chosen_pos.getColumnIndex()] = 0;
+                add_adj_walls(chosen_pos,adjacent_walls,new_maze);
+                adjacent_walls.remove(index_chosen_in_list);
+            }
         }
+        new_maze.getStartPosition();  // decide the start and goal position. next times that this func is called, return
+        // a deep copy of position
+        new_maze.getGoalPosition();
         return new_maze;
     }
 }

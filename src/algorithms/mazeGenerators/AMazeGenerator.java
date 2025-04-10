@@ -5,7 +5,7 @@ public abstract class AMazeGenerator implements IMazeGenerator{
 
 
 
-    public AMazeGenerator(int rows, int cols){}
+    public AMazeGenerator(){}
 
     public abstract Maze generate(int rows, int cols);
 

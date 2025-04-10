@@ -8,6 +8,10 @@ public class Position {
         this.row = row;
         this.col = col;
     }
+    public Position(Position other) {
+        this.row = other.row;
+        this.col = other.col; // deep copy of address
+    }
     public int getRowIndex(){
         return this.row;
     }

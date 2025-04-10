@@ -2,8 +2,8 @@ package algorithms.mazeGenerators;
 
 public class EmptyMazeGenerator extends AMazeGenerator{
 
-    public EmptyMazeGenerator(int rows, int cols){
-        super(rows, cols);
+    public EmptyMazeGenerator(){
+        super();
     }
 
     public Maze generate(int rows, int cols){
@@ -14,6 +14,9 @@ public class EmptyMazeGenerator extends AMazeGenerator{
                 maze[i][j] = 0;
             }
         }
+        new_maze.getStartPosition();  // decide the start and goal position. next times that this func is called, return
+        // a deep copy of position
+        new_maze.getGoalPosition();
         return new_maze;
     }
 }
