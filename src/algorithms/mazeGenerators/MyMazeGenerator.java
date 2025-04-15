@@ -91,6 +91,7 @@ public class MyMazeGenerator extends AMazeGenerator{
                 add_adj_walls(chosen_pos,adjacent_walls,new_maze);
                 adjacent_walls.remove(index_chosen_in_list);
             }
+            adj_visit_counter = 0;
         }
         new_maze.getStartPosition();  // decide the start and goal position. next times that this func is called, return
         // a deep copy of position
