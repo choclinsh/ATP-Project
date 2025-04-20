@@ -8,17 +8,27 @@ public class MazeState extends AState{
     public MazeState(Position pos){
         super(pos.toString());
         this.cameFrom = null; // check if new is better
+        this.cost = 0;
     }
 
-    public MazeState(Position pos, AState father){
+    public MazeState(Position pos, AState father, int cost){
         super(pos.toString());
-        this.cameFrom = father; // check if new is better
+        this.cameFrom = father;
+        this.cost = cost;
     }
 
     public int getRowIndex(){
-        return Character.getNumericValue(state.charAt(1));
+        int startIndex = state.indexOf('{') + 1;
+        int endIndex = state.indexOf(',');
+
+        String rowValue = state.substring(startIndex, endIndex);
+        return Integer.parseInt(rowValue);
     }
     public int getColIndex(){
-        return Character.getNumericValue(state.charAt(3));
+        int startIndex = state.indexOf(',') + 1;
+        int endIndex = state.indexOf('}');
+
+        String rowValue = state.substring(startIndex, endIndex);
+        return Integer.parseInt(rowValue);
     }
 }

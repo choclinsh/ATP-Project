@@ -46,47 +46,8 @@ public class Maze {
     public Position getStartPosition() {
         if (start_pos == null)
         {
-            int row_index;
-            int col_index;
-            Random rd = new Random();
-            boolean choice;
-            while (true)
-            {
-                choice = rd.nextBoolean();
-                if (choice)
-                {
-                    row_index = (int)(Math.random() * rows);
-                    choice = rd.nextBoolean();
-                    if (choice){
-                        if (maze[row_index][0] == 0){
-                            start_pos = new Position(row_index, 0);
-                            return new Position(start_pos);
-                        }
-                    } else{
-                        if (maze[row_index][cols-1] == 0){
-                            start_pos = new Position(row_index, cols-1);
-                            return new Position(start_pos);
-                        }
-                    }
-                }
-                else {
-                    col_index = (int)(Math.random() * cols);
-                    choice = rd.nextBoolean();
-                    if (choice) {
-                        if (maze[0][col_index] == 0){
-                            start_pos = new Position(0, col_index);
-                            return new Position(start_pos);
-                        }
-                    }
-                    else {
-                        if (maze[rows-1][col_index] == 0){
-                            start_pos = new Position(rows-1, col_index);
-                            return new Position(start_pos);
-                        }
-                    }
-
-                }
-            }
+            start_pos = getPosition();
+            return new Position(start_pos);
         }
         else {
             return new Position(start_pos);
@@ -96,50 +57,50 @@ public class Maze {
     public Position getGoalPosition() {
         if (goal_pos == null)
         {
-            int row_index;
-            int col_index;
-            Random rd = new Random();
-            boolean choice;
-            while (true)
-            {
-                choice = rd.nextBoolean();
-                if (choice)
-                {
-                    row_index = (int)(Math.random() * rows);
-                    choice = rd.nextBoolean();
-                    if (choice){
-                        if (maze[row_index][0] == 0){
-                            goal_pos = new Position(row_index, 0);
-                            return new Position(goal_pos);
-                        }
-                    } else{
-                        if (maze[row_index][cols-1] == 0){
-                            goal_pos = new Position(row_index, cols-1);
-                            return new Position(goal_pos);
-                        }
-                    }
-                }
-                else {
-                    col_index = (int)(Math.random() * cols);
-                    choice = rd.nextBoolean();
-                    if (choice) {
-                        if (maze[0][col_index] == 0){
-                            goal_pos = new Position(0, col_index);
-                            return new Position(goal_pos);
-                        }
-                    }
-                    else {
-                        if (maze[rows-1][col_index] == 0){
-                            goal_pos = new Position(rows-1, col_index);
-                            return new Position(goal_pos);
-                        }
-                    }
-
-                }
-            }
+            goal_pos = getPosition();
+            return new Position(goal_pos);
         }
         else {
             return new Position(goal_pos);
+        }
+    }
+
+    public Position getPosition() {
+        int row_index;
+        int col_index;
+        Random rd = new Random();
+        boolean choice;
+        while (true)
+        {
+            choice = rd.nextBoolean();
+            if (choice)
+            {
+                row_index = (int)(Math.random() * rows);
+                choice = rd.nextBoolean();
+                if (choice){
+                    if (maze[row_index][0] == 0){
+                        return new Position(row_index, 0);
+                    }
+                } else{
+                    if (maze[row_index][cols-1] == 0){
+                        return new Position(row_index, cols-1);
+                    }
+                }
+            }
+            else {
+                col_index = (int)(Math.random() * cols);
+                choice = rd.nextBoolean();
+                if (choice) {
+                    if (maze[0][col_index] == 0){
+                        return new Position(0, col_index);
+                    }
+                }
+                else {
+                    if (maze[rows-1][col_index] == 0){
+                        return new Position(rows-1, col_index);
+                    }
+                }
+            }
         }
     }
 }

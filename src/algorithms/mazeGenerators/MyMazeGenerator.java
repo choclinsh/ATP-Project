@@ -1,7 +1,7 @@
 package algorithms.mazeGenerators;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+
 
 public class MyMazeGenerator extends AMazeGenerator{
     public MyMazeGenerator(){
@@ -50,10 +50,18 @@ public class MyMazeGenerator extends AMazeGenerator{
         //Add the walls of the cell to the wall list.
         List<Position> adjacent_walls = new ArrayList<Position>();
         add_adj_walls(first_position,adjacent_walls,new_maze);
+
+        creationLoop(adjacent_walls, maze, new_maze);
+        new_maze.getStartPosition();  // decide the start and goal position. next times that this func is called, return
+        // a deep copy of position
+        new_maze.getGoalPosition();
+        return new_maze;
+    }
+
+    private void creationLoop(List<Position> adjacent_walls, int[][] maze, Maze new_maze){
         int index_chosen_in_list;
         Position chosen_pos;
         int adj_visit_counter = 0;
-        //While there are walls in the list:
         while (!adjacent_walls.isEmpty()){
             index_chosen_in_list = (int)(Math.random() * adjacent_walls.size());
             chosen_pos = adjacent_walls.get(index_chosen_in_list);
@@ -93,9 +101,5 @@ public class MyMazeGenerator extends AMazeGenerator{
             }
             adj_visit_counter = 0;
         }
-        new_maze.getStartPosition();  // decide the start and goal position. next times that this func is called, return
-        // a deep copy of position
-        new_maze.getGoalPosition();
-        return new_maze;
     }
 }

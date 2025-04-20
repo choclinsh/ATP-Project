@@ -8,13 +8,36 @@ public abstract class AState {
     public AState(String state){
         this.state = state;
     }
-    public boolean equals(AState s){
-        return state.equals(s.state);
+
+    @Override
+    public boolean equals(Object obj) {
+        // Check if same object reference
+        if (this == obj) return true;
+
+        // Check if null or different class
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        // Cast to AState
+        AState other = (AState) obj;
+
+        // Compare states
+        return state.equals(other.state);
     }
-    public void setCost(double cost){
-        this.cost = cost;
+
+    @Override
+    public int hashCode() {
+        return state.hashCode();
     }
-    public void setCameFrom(AState father){
-        this.cameFrom = father;
+
+    public AState getCameFrom(){
+        return cameFrom;
+    }
+
+    public String toString() {
+        return state;
+    }
+
+    public double getCost() {
+        return cost;
     }
 }

@@ -20,44 +20,57 @@ public class SearchableMaze implements ISearchable{
     public void addSides(MazeState s, ArrayList<AState> successors_list) {
         if (s.getRowIndex() > 0) {
             if (maze.getCell((s.getRowIndex() - 1), s.getColIndex()) == 0) {
-                successors_list.add(new MazeState(new Position((s.getRowIndex() - 1), s.getColIndex())));
+                successors_list.add(new MazeState(new Position((s.getRowIndex() - 1), s.getColIndex()),s, 10));
             }
         }
         if (s.getColIndex() < maze.getCols()-1) {
             if (maze.getCell((s.getRowIndex()), s.getColIndex() + 1) == 0) {
-                successors_list.add(new MazeState(new Position((s.getRowIndex()), s.getColIndex() + 1)));  // right
+                successors_list.add(new MazeState(new Position((s.getRowIndex()), s.getColIndex() + 1),s ,10));  // right
             }
         }
         if (s.getRowIndex() < maze.getRows() - 1) {
             if (maze.getCell((s.getRowIndex() + 1), s.getColIndex()) == 0) {
-                successors_list.add(new MazeState(new Position((s.getRowIndex() - 1), s.getColIndex())));  // down
+                successors_list.add(new MazeState(new Position((s.getRowIndex() + 1), s.getColIndex()),s,10));  // down
             }
         }
         if (s.getColIndex() > 0) {
             if (maze.getCell((s.getRowIndex()), s.getColIndex() - 1) == 0) {
-                successors_list.add(new MazeState(new Position((s.getRowIndex()), s.getColIndex() - 1)));  // left
+                successors_list.add(new MazeState(new Position((s.getRowIndex()), s.getColIndex() - 1),s,10));  // left
             }
         }
     }
+
     public void addDiagonals(MazeState s, ArrayList<AState> successors_list) {
         if (s.getRowIndex() > 0 && s.getColIndex() < maze.getCols() - 1) {
-            if (maze.getCell((s.getRowIndex() - 1), s.getColIndex() + 1) == 0) {  // right up
-                successors_list.add(new MazeState(new Position((s.getRowIndex() - 1), s.getColIndex()+1)));
+            if (maze.getCell((s.getRowIndex() - 1), s.getColIndex()) == 0 || maze.getCell((s.getRowIndex()),
+                    s.getColIndex() + 1) == 0) {
+                if (maze.getCell((s.getRowIndex() - 1), s.getColIndex() + 1) == 0) {  // right up
+                    successors_list.add(new MazeState(new Position((s.getRowIndex() - 1), s.getColIndex() + 1), s,15));
+                }
             }
         }
         if (s.getRowIndex() < maze.getRows()-1 && s.getColIndex() < maze.getCols()-1) {
-            if (maze.getCell((s.getRowIndex()+ 1), s.getColIndex() + 1) == 0) {
-                successors_list.add(new MazeState(new Position((s.getRowIndex()+1), s.getColIndex() + 1)));  // right down
+            if (maze.getCell((s.getRowIndex() + 1), s.getColIndex()) == 0 || maze.getCell((s.getRowIndex()),
+                    s.getColIndex() + 1) == 0) {
+                if (maze.getCell((s.getRowIndex() + 1), s.getColIndex() + 1) == 0) {
+                    successors_list.add(new MazeState(new Position((s.getRowIndex() + 1), s.getColIndex() + 1), s,15));  // right down
+                }
             }
         }
         if (s.getRowIndex() < maze.getRows() - 1 && s.getColIndex() > 0) {
-            if (maze.getCell((s.getRowIndex() + 1), s.getColIndex()-1) == 0) {
-                successors_list.add(new MazeState(new Position((s.getRowIndex() + 1), s.getColIndex()-1)));  // down left
+            if (maze.getCell((s.getRowIndex() + 1), s.getColIndex()) == 0 || maze.getCell((s.getRowIndex()),
+                    s.getColIndex() - 1) == 0) {
+                if (maze.getCell((s.getRowIndex() + 1), s.getColIndex() - 1) == 0) {
+                    successors_list.add(new MazeState(new Position((s.getRowIndex() + 1), s.getColIndex() - 1), s,15));  // down left
+                }
             }
         }
         if (s.getRowIndex() > 0 && s.getColIndex() > 0) {
-            if (maze.getCell((s.getRowIndex()-1), s.getColIndex() - 1) == 0) {
-                successors_list.add(new MazeState(new Position((s.getRowIndex()-1), s.getColIndex() - 1)));  // left up
+            if (maze.getCell((s.getRowIndex() - 1), s.getColIndex()) == 0 || maze.getCell((s.getRowIndex()),
+                    s.getColIndex() - 1) == 0) {
+                if (maze.getCell((s.getRowIndex() - 1), s.getColIndex() - 1) == 0) {
+                    successors_list.add(new MazeState(new Position((s.getRowIndex() - 1), s.getColIndex() - 1), s,15));  // left up
+                }
             }
         }
     }
