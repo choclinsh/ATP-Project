@@ -3,8 +3,6 @@ package algorithms.search;
 import algorithms.mazeGenerators.Position;
 
 public class MazeState extends AState{
-
-
     public MazeState(Position pos){
         super(pos.toString());
         this.cameFrom = null; // check if new is better

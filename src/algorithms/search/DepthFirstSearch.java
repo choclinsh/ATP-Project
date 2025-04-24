@@ -23,6 +23,9 @@ public class DepthFirstSearch extends ASearchingAlgorithm{
 
     @Override
     public Solution solve(ISearchable s) {
+        if (s == null) {
+            return null;
+        }
         openList.push(s.getStartState());
         AState goalState = s.getGoalState();
         ArrayList<AState> neighbors;

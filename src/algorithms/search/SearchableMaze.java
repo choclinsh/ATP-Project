@@ -9,6 +9,9 @@ public class SearchableMaze implements ISearchable{
     private Maze maze;
 
     public SearchableMaze(Maze maze){
+        if (maze == null) {
+            throw new IllegalArgumentException("Maze cannot be null");
+        }
         this.maze = maze;
     }
     public AState getStartState(){
@@ -16,6 +19,9 @@ public class SearchableMaze implements ISearchable{
     }
     public AState getGoalState(){
         return new MazeState(maze.getGoalPosition());
+    }
+    public Maze getMaze(){
+        return maze;
     }
     public void addSides(MazeState s, ArrayList<AState> successors_list) {
         if (s.getRowIndex() > 0) {
@@ -85,5 +91,4 @@ public class SearchableMaze implements ISearchable{
         addDiagonals(s, successors_list);
         return successors_list;
     }
-
 }

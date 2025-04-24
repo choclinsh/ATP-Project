@@ -33,6 +33,10 @@ public class MyMazeGenerator extends AMazeGenerator{
     }
 
     public Maze generate(int rows, int cols){
+        if (rows < 2 || cols < 2)
+        {
+            return null;
+        }
         Maze new_maze = new Maze(rows, cols);
         int[][] maze = new_maze.getMaze();
         // Start with a grid full of walls

@@ -20,6 +20,9 @@ public class BreadthFirstSearch extends ASearchingAlgorithm{
 
     @Override
     public Solution solve(ISearchable s) {
+        if (s == null) {
+            return null;
+        }
         visited.add(s.getStartState());
         openList.add(s.getStartState());
 
