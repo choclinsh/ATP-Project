@@ -1,11 +1,23 @@
 package algorithms.mazeGenerators;
-
+/**
+ * Generates a maze with no walls (all cells are traversable).
+ * This is the simplest maze generator implementation.
+ */
 public class EmptyMazeGenerator extends AMazeGenerator{
-
+    /**
+     * Constructor for the empty maze generator.
+     */
     public EmptyMazeGenerator(){
         super();
     }
-
+    /**
+     * Generates an empty maze with the specified dimensions.
+     * All cells in the maze will be traversable (0).
+     *
+     * @param rows The number of rows in the maze
+     * @param cols The number of columns in the maze
+     * @return A new Maze object where all cells are traversable, or null if dimensions are invalid
+     */
     public Maze generate(int rows, int cols){
         if (rows < 2 || cols < 2)
         {

@@ -2,11 +2,25 @@ package algorithms.mazeGenerators;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Generates a complex maze using a randomized Prim's algorithm variant.
+ * This creates a maze with corridors and walls where there is always at least
+ * one path from start to goal.
+ */
 public class MyMazeGenerator extends AMazeGenerator{
+    /**
+     * Constructor for the complex maze generator.
+     */
     public MyMazeGenerator(){
         super();
     }
+    /**
+     * Adds adjacent walls of a position to the provided list.
+     *
+     * @param current Current position
+     * @param list List to add adjacent walls to
+     * @param maze The maze object
+     */
     private void add_adj_walls(Position current, List<Position> list, Maze maze) {
         int curr_row = current.getRowIndex();
         int curr_col = current.getColumnIndex();
@@ -31,7 +45,14 @@ public class MyMazeGenerator extends AMazeGenerator{
             }
         }
     }
-
+    /**
+     * Generates a complex maze with the specified dimensions using a
+     * randomized Prim's algorithm variant.
+     *
+     * @param rows The number of rows in the maze
+     * @param cols The number of columns in the maze
+     * @return A new Maze object with a complex structure, or null if dimensions are invalid
+     */
     public Maze generate(int rows, int cols){
         if (rows < 2 || cols < 2)
         {
@@ -52,7 +73,7 @@ public class MyMazeGenerator extends AMazeGenerator{
         maze[row_index][col_index] = 0;
 
         //Add the walls of the cell to the wall list.
-        List<Position> adjacent_walls = new ArrayList<Position>();
+        List<Position> adjacent_walls = new ArrayList<>();
         add_adj_walls(first_position,adjacent_walls,new_maze);
 
         creationLoop(adjacent_walls, maze, new_maze);
@@ -61,40 +82,40 @@ public class MyMazeGenerator extends AMazeGenerator{
         new_maze.getGoalPosition();
         return new_maze;
     }
-
+    /**
+     * Main loop for the maze creation algorithm. Processes walls and creates paths.
+     *
+     * @param adjacent_walls List of walls to process
+     * @param maze The maze 2D array
+     * @param new_maze The maze object
+     */
     private void creationLoop(List<Position> adjacent_walls, int[][] maze, Maze new_maze){
         int index_chosen_in_list;
         Position chosen_pos;
         int adj_visit_counter = 0;
         while (!adjacent_walls.isEmpty()){
-            index_chosen_in_list = (int)(Math.random() * adjacent_walls.size());
+            index_chosen_in_list = (int)(Math.random() * adjacent_walls.size());  // picks random cell from list
             chosen_pos = adjacent_walls.get(index_chosen_in_list);
-            if (chosen_pos.getRowIndex() > 0) {
-                if (maze[chosen_pos.getRowIndex()-1][chosen_pos.getColumnIndex()] == 0) {
-                    adj_visit_counter++;
-                }
+            if (chosen_pos.getRowIndex() > 0) {  // checks for max 2 accessible neighbors and then removes the origin from the list
+                if (maze[chosen_pos.getRowIndex()-1][chosen_pos.getColumnIndex()] == 0) {adj_visit_counter++;}
             }
-            if (chosen_pos.getRowIndex() < new_maze.getRows() - 1) {
+            if (chosen_pos.getRowIndex() < new_maze.getRows() - 1) {  // every time validates the location is not out of index
                 if (maze[chosen_pos.getRowIndex()+1][chosen_pos.getColumnIndex()] == 0) {
                     adj_visit_counter++;
-                    if (adj_visit_counter ==2) {
-                        adjacent_walls.remove(index_chosen_in_list);
-                    }
+                    if (adj_visit_counter ==2) {adjacent_walls.remove(index_chosen_in_list);}
                 }
             }
             if (chosen_pos.getColumnIndex() > 0 && adj_visit_counter < 2) {
                 if (maze[chosen_pos.getRowIndex()][chosen_pos.getColumnIndex()-1] == 0) {
                     adj_visit_counter++;
-                    if (adj_visit_counter ==2) {
-                        adjacent_walls.remove(index_chosen_in_list);
+                    if (adj_visit_counter ==2) {adjacent_walls.remove(index_chosen_in_list);
                     }
                 }
             }
             if (chosen_pos.getColumnIndex() < new_maze.getCols() - 1 && adj_visit_counter < 2) {
                 if (maze[chosen_pos.getRowIndex()][chosen_pos.getColumnIndex()+1] == 0) {
                     adj_visit_counter++;
-                    if (adj_visit_counter ==2) {
-                        adjacent_walls.remove(index_chosen_in_list);
+                    if (adj_visit_counter ==2) {adjacent_walls.remove(index_chosen_in_list);
                     }
                 }
             }

@@ -11,10 +11,20 @@ import org.junit.jupiter.api.DisplayName;
 
 import java.util.List;
 
+/**
+ * Test class for the BestFirstSearch algorithm implementation.
+ * This class verifies the correctness and functionality of the BestFirstSearch algorithm
+ * by testing it on maze problems of various sizes.
+ */
 class BestFirstSearchTest {
     private BestFirstSearch bestFirstSearch;
     private SearchableMaze searchableMaze;
 
+    /**
+     * Sets up the test environment before each test case.
+     * Initializes a BestFirstSearch instance and creates a searchable maze
+     * with dimensions 1000x1000 using the MyMazeGenerator.
+     */
     @BeforeEach
     void setUp() {
         bestFirstSearch = new BestFirstSearch();
@@ -23,12 +33,20 @@ class BestFirstSearchTest {
         searchableMaze = new SearchableMaze(maze);
     }
 
+    /**
+     * Tests that the algorithm returns the correct name.
+     * Verifies that getName() returns "Best first search".
+     */
     @Test
     @DisplayName("Test algorithm name is correct")
     void testGetName() {
         assertEquals("Best first search", bestFirstSearch.getName());
     }
 
+    /**
+     * Tests that the evaluatedNodes counter increments correctly.
+     * Verifies that the counter starts at 0 and increases after solving a maze.
+     */
     @Test
     @DisplayName("Test evaluatedNodes counter increments correctly")
     void testEvaluatedNodesCounter() {
@@ -37,6 +55,11 @@ class BestFirstSearchTest {
         assertTrue(bestFirstSearch.getNumberOfNodesEvaluated() > 0);
     }
 
+    /**
+     * Tests that the algorithm returns the correct solution.
+     * Verifies that the solution exists, is not empty, and starts with the start state
+     * and ends with the goal state.
+     */
     @Test
     @DisplayName("Test algorithm returns correct solution")
     void testSolveReturnsCorrectSolution() {
@@ -52,7 +75,12 @@ class BestFirstSearchTest {
         assertEquals(searchableMaze.getGoalState(), path.get(path.size() - 1));
     }
 
-
+    /**
+     * Tests that the algorithm throws an exception when attempting to solve an
+     * invalid maze (with dimensions 0x0).
+     * Verifies that an IllegalArgumentException is thrown when creating a SearchableMaze
+     * from a 0x0 maze.
+     */
     @Test
     @DisplayName("Test algorithm returns null for unsolvable problems")
     void testReturnsNullForNonExistMaze() {

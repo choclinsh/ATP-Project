@@ -1,11 +1,25 @@
 package algorithms.mazeGenerators;
 import java.util.Random;
-
+/**
+ * Generates a simple maze by creating a path from start to goal
+ * and adding some random traversable cells.
+ */
 public class SimpleMazeGenerator extends AMazeGenerator{
+    /**
+     * Constructor for the simple maze generator.
+     */
     public SimpleMazeGenerator(){
         super();
     }
-
+    /**
+     * Generates a simple maze with the specified dimensions.
+     * Creates a guaranteed path from start to goal position
+     * and adds some random traversable cells.
+     *
+     * @param rows The number of rows in the maze
+     * @param cols The number of columns in the maze
+     * @return A new Maze object with a simple path structure, or null if dimensions are invalid
+     */
     public Maze generate(int rows, int cols){
         if (rows < 2 || cols < 2)
         {
@@ -41,6 +55,15 @@ public class SimpleMazeGenerator extends AMazeGenerator{
         addRandomCells(maze, rows, cols);
         return new_maze;
     }
+    /**
+     * Creates a guaranteed path from start to goal position.
+     *
+     * @param maze The maze 2D array
+     * @param start The starting position
+     * @param goal The goal position
+     * @param rows The number of rows in the maze
+     * @param cols The number of columns in the maze
+     */
     private void createPath(int[][] maze, Position start, Position goal, int rows, int cols) {
         int currentRow = start.getRowIndex();
         int currentCol = start.getColumnIndex();
@@ -74,12 +97,18 @@ public class SimpleMazeGenerator extends AMazeGenerator{
             if (isValidPosition(nextRow, nextCol, rows, cols)) {
                 currentRow = nextRow;
                 currentCol = nextCol;
-                // Mark the current cell as a path (0)
+                // Mark the current cell as a path
                 maze[currentRow][currentCol] = 0;
             }
         }
     }
-
+    /**
+     * Adds random traversable cells to the maze.
+     *
+     * @param maze The maze 2D array
+     * @param rows The number of rows in the maze
+     * @param cols The number of columns in the maze
+     */
     private void addRandomCells(int[][] maze, int rows, int cols) {
         Random rd = new Random();
 
@@ -97,9 +126,16 @@ public class SimpleMazeGenerator extends AMazeGenerator{
             }
         }
     }
-
+    /**
+     * Checks if a position is valid within the maze dimensions.
+     *
+     * @param row The row index to check
+     * @param col The column index to check
+     * @param rows The number of rows in the maze
+     * @param cols The number of columns in the maze
+     * @return true if the position is valid, false otherwise
+     */
     private boolean isValidPosition(int row, int col, int rows, int cols) {
         return row >= 0 && row < rows && col >= 0 && col < cols;
     }
 }
-
