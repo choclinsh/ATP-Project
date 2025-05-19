@@ -7,6 +7,7 @@ import java.util.Random;
  * The maze consists of a 3D array where 0 represents traversable paths and 1 represents walls.
  */
 public class Maze3D {
+
     private int[][][] maze;
     private int depth;
     private int rows;
