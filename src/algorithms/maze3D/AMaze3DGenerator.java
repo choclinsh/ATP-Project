@@ -1,11 +1,10 @@
 package algorithms.maze3D;
 
-import algorithms.mazeGenerators.Maze;
 /**
  * An abstract base class for 3D maze generators.
  * Provides a method to measure the time it takes to generate a maze.
  */
-public abstract class AMaze3DGenerator implements IMazeGenerator3D {
+public abstract class AMaze3DGenerator implements IMaze3DGenerator {
 
     /**
      * Default constructor for AMaze3DGenerator.

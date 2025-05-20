@@ -3,7 +3,7 @@ package algorithms.maze3D;
 /**
  * Interface defining the operations for a 3D maze generator.
  */
-public interface IMazeGenerator3D {
+public interface IMaze3DGenerator {
     /**
      * Generates a 3D maze with the given dimensions.
      *

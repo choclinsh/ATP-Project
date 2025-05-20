@@ -24,7 +24,7 @@ public class RunMaze3DGenerator {
      *
      * @param mazeGenerator the 3D maze generator algorithm to test
      */
-    private static void testMazeGenerator(IMazeGenerator3D mazeGenerator) {
+    private static void testMazeGenerator(IMaze3DGenerator mazeGenerator) {
 // prints the time it takes the algorithm to run
         System.out.println(String.format("Maze generation time(ms): %s", mazeGenerator.measureAlgorithmTimeMillis(100/*rows*/,100/*columns*/,100)));
 // generate another maze

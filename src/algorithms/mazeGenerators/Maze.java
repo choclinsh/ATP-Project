@@ -1,5 +1,8 @@
 package algorithms.mazeGenerators;
 
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.IllformedLocaleException;
 import java.util.Random;
 /**
  * Represents a 2D maze with walls, paths, start position, and goal position.
@@ -7,8 +10,8 @@ import java.util.Random;
  */
 public class Maze {
     private final int[][] maze;
-    private final int rows;
-    private final int cols;
+    private int rows;
+    private int cols;
     private Position start_pos;
     private Position goal_pos;
     /**
@@ -21,6 +24,33 @@ public class Maze {
         this.maze = new int[rows][cols];
         this.rows = rows;
         this.cols = cols;
+    }
+
+    public Maze(byte[] b){
+        int metadataStart = b.length - 12; // 6 ערכים * 2 בתים
+        int idx = 0;
+
+        // קריאת השדות מתוך הסוף
+        rows = readBytes(b, metadataStart);
+        cols = readBytes(b, metadataStart + 2);
+        int startRow = readBytes(b, metadataStart + 4);
+        int startCol = readBytes(b, metadataStart + 6);
+        int goalRow = readBytes(b, metadataStart + 8);
+        int goalCol = readBytes(b, metadataStart + 10);
+
+        start_pos = new Position(startRow, startCol);
+        goal_pos = new Position(goalRow, goalCol);
+
+        // קריאת המפה עצמה
+        maze = new int[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                maze[i][j] = b[idx++];
+            }
+        }
+    }
+    private int readBytes(byte[] b, int offset) {
+        return ((b[offset] & 0xFF) << 8) | (b[offset + 1] & 0xFF);
     }
     /**
      * Gets the 2D array representing the maze.
@@ -148,5 +178,30 @@ public class Maze {
                 }
             }
         }
+    }
+
+    public byte[] toByteArray(){
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+        // כתיבת תוכן המפה (0 ו־1)
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                out.write(maze[i][j]);
+            }
+        }
+        out.write(0xFF);
+        // כתיבת שדות המטא־דאטה כ־short (2 בתים כל אחד)
+        addBytesToArr(out, rows);
+        addBytesToArr(out, cols);
+        addBytesToArr(out, start_pos.getRowIndex());
+        addBytesToArr(out, start_pos.getColumnIndex());
+        addBytesToArr(out, goal_pos.getRowIndex());
+        addBytesToArr(out, goal_pos.getColumnIndex());
+
+        return out.toByteArray();
+    }
+    public void addBytesToArr(ByteArrayOutputStream byteArr, int num){
+        byteArr.write((num >> 8) & 0xFF); // high byte
+        byteArr.write(num & 0xFF);        // low byte
     }
 }

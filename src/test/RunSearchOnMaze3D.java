@@ -17,7 +17,7 @@ public class RunSearchOnMaze3D {
      * @param args command line arguments (not used)
      */
     public static void main(String[] args) {
-        IMazeGenerator3D mg = new MyMaze3DGenerator();
+        IMaze3DGenerator mg = new MyMaze3DGenerator();
         Maze3D maze = mg.generate(50, 50, 50);
         maze.print();
         SearchableMaze3D searchableMaze = new SearchableMaze3D(maze);
