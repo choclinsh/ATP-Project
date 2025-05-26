@@ -1,12 +1,15 @@
 package algorithms.search;
+
+import java.io.Serializable;
+
 /**
  * Abstract base class for states in a search problem.
  * Represents a node in the search space.
  */
-public abstract class AState {
+public abstract class AState implements Serializable {
     protected String state;
-    protected double cost;
-    protected AState cameFrom;
+    protected transient double cost;
+    protected transient AState cameFrom;
     /**
      * Creates a new state with the specified representation.
      *
@@ -70,4 +73,5 @@ public abstract class AState {
     public double getCost() {
         return cost;
     }
+    public abstract byte[] toByteArray();
 }

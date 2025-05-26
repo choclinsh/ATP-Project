@@ -2,6 +2,10 @@ package algorithms.maze3D;
 
 import algorithms.search.AState;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+
 /**
  * Represents a state in a 3D maze search problem.
  * Extends the abstract AState class to include 3D position information.
@@ -66,5 +70,17 @@ public class Maze3DState extends AState{
         String content = state.substring(1, state.length() - 1);
         String[] parts = content.split(",");
         return Integer.parseInt(parts[2]);
+    }
+    public byte[] toByteArray() {
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
+             DataOutputStream dos = new DataOutputStream(baos)) {
+
+            dos.writeUTF(state);
+
+            return baos.toByteArray();
+
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to serialize MazeState to byte array", e);
+        }
     }
 }

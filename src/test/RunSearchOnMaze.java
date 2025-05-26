@@ -19,7 +19,7 @@ public class RunSearchOnMaze {
      */
     public static void main(String[] args) {
         IMazeGenerator mg = new MyMazeGenerator();
-        Maze maze = mg.generate(100, 100); // will be null if inserted less than 2 as args
+        Maze maze = mg.generate(10, 10); // will be null if inserted less than 2 as args
         if (maze != null) {
             maze.print();
             SearchableMaze searchableMaze = new SearchableMaze(maze);
