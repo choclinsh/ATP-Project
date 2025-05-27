@@ -18,8 +18,9 @@ public class RunCommunicateWithServers {
         Server solveSearchProblemServer = new Server(5401, 5000, new ServerStrategySolveSearchProblem());
 
 //Starting servers
-        new Thread(solveSearchProblemServer::start).start();
-        new Thread(mazeGeneratingServer::start).start();
+        solveSearchProblemServer.start()
+        ; mazeGeneratingServer.start();
+//stringReverserServer.start();
 
 //Communicating with servers
         CommunicateWithServer_MazeGenerating();

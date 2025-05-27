@@ -61,31 +61,34 @@ public class Server {
      * The behavior is the same as before, but now uses the configurable thread pool.
      */
     public void start(){
-        try {
-            ServerSocket serverSocket = new ServerSocket(port);
-            serverSocket.setSoTimeout(listeningIntervalMS);
-            System.out.println("Starting server at port = " + port);
+        Thread serverThread = new Thread(() -> {
+            try {
+                ServerSocket serverSocket = new ServerSocket(port);
+                serverSocket.setSoTimeout(listeningIntervalMS);
+                System.out.println("Starting server at port = " + port);
 
-            while (!stop) {
-                try {
-                    Socket clientSocket = serverSocket.accept();
-                    System.out.println("Client accepted: " + clientSocket.toString());
+                while (!stop) {
+                    try {
+                        Socket clientSocket = serverSocket.accept();
+                        System.out.println("Client accepted: " + clientSocket.toString());
 
-                    // Submit client handling task to the configurable thread pool
-                    threadPool.submit(() -> {
-                        handleClient(clientSocket);
-                    });
+                        threadPool.submit(() -> {
+                            handleClient(clientSocket);
+                        });
 
-                } catch (SocketTimeoutException e){
-                    System.out.println("Socket timeout");
+                    } catch (SocketTimeoutException e) {
+                        System.out.println("Socket timeout");
+                    }
                 }
-            }
 
-            serverSocket.close();
-            threadPool.shutdownNow();
-        } catch (IOException e) {
-            System.out.println("IOException: " + e.getMessage());
-        }
+                serverSocket.close();
+                threadPool.shutdownNow();
+
+            } catch (IOException e) {
+                System.out.println("IOException: " + e.getMessage());
+            }
+        });
+        serverThread.start();
     }
 
     /**

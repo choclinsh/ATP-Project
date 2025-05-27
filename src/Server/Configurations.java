@@ -21,10 +21,10 @@ import java.util.Properties;
  */
 public class Configurations {
     /** Singleton instance */
-    private static Configurations instance = null;
+    private static Configurations singletonInstance = null;
 
     /** Properties object containing all configuration values */
-    private Properties properties;
+    private Properties configValues;
 
     /** Name of the configuration file in resources directory */
     private static final String CONFIG_FILE = "config.properties";
@@ -41,7 +41,7 @@ public class Configurations {
      * @throws RuntimeException If the configuration file cannot be loaded
      */
     private Configurations() {
-        properties = new Properties();
+        configValues = new Properties();
         loadProperties();
     }
 
@@ -52,10 +52,10 @@ public class Configurations {
      * @return The singleton Configurations instance
      */
     public static synchronized Configurations getInstance() {
-        if (instance == null) {
-            instance = new Configurations();
+        if (singletonInstance == null) {
+            singletonInstance = new Configurations();
         }
-        return instance;
+        return singletonInstance;
     }
 
     /**
@@ -74,7 +74,7 @@ public class Configurations {
                 return;
             }
 
-            properties.load(inputStream);
+            configValues.load(inputStream);
             System.out.println("Configuration loaded successfully from " + CONFIG_FILE);
 
             // Validate and log loaded configurations
@@ -91,9 +91,9 @@ public class Configurations {
      * Sets default configuration values when the config file cannot be loaded.
      */
     private void setDefaultProperties() {
-        properties.setProperty("threadPoolSize", String.valueOf(DEFAULT_THREAD_POOL_SIZE));
-        properties.setProperty("mazeGeneratingAlgorithm", DEFAULT_MAZE_GENERATING_ALGORITHM);
-        properties.setProperty("mazeSearchingAlgorithm", DEFAULT_MAZE_SEARCHING_ALGORITHM);
+        configValues.setProperty("threadPoolSize", String.valueOf(DEFAULT_THREAD_POOL_SIZE));
+        configValues.setProperty("mazeGeneratingAlgorithm", DEFAULT_MAZE_GENERATING_ALGORITHM);
+        configValues.setProperty("mazeSearchingAlgorithm", DEFAULT_MAZE_SEARCHING_ALGORITHM);
     }
 
     /**
@@ -114,7 +114,7 @@ public class Configurations {
      */
     public int getThreadPoolSize() {
         try {
-            int size = Integer.parseInt(properties.getProperty("threadPoolSize", String.valueOf(DEFAULT_THREAD_POOL_SIZE)));
+            int size = Integer.parseInt(configValues.getProperty("threadPoolSize", String.valueOf(DEFAULT_THREAD_POOL_SIZE)));
             return Math.max(1, size); // Ensure at least 1 thread
         } catch (NumberFormatException e) {
             System.err.println("Invalid threadPoolSize value. Using default: " + DEFAULT_THREAD_POOL_SIZE);
@@ -128,7 +128,7 @@ public class Configurations {
      * @return The name of the algorithm to use for maze generation
      */
     public String getMazeGeneratingAlgorithm() {
-        return properties.getProperty("mazeGeneratingAlgorithm", DEFAULT_MAZE_GENERATING_ALGORITHM);
+        return configValues.getProperty("mazeGeneratingAlgorithm", DEFAULT_MAZE_GENERATING_ALGORITHM);
     }
 
     /**
@@ -137,6 +137,6 @@ public class Configurations {
      * @return The name of the algorithm to use for maze solving
      */
     public String getMazeSearchingAlgorithm() {
-        return properties.getProperty("mazeSearchingAlgorithm", DEFAULT_MAZE_SEARCHING_ALGORITHM);
+        return configValues.getProperty("mazeSearchingAlgorithm", DEFAULT_MAZE_SEARCHING_ALGORITHM);
     }
 }

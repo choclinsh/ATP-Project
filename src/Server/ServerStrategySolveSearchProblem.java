@@ -83,7 +83,6 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy{
 
             // Cache miss - solve using configured algorithm
             System.out.println("Request " + currentRequest + ": Cache miss - solving maze using " + algorithmName);
-            long solveStartTime = System.currentTimeMillis();
 
             ISearchable searchableMaze = new SearchableMaze(maze);
             ISearchingAlgorithm searchAlgorithm = createSearchAlgorithm(algorithmName);
@@ -94,8 +93,7 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy{
             Path solFile = saveToTempFileSol(solution.toByteArray());
             mazeToSolMap.put(mazeFile, solFile);
 
-            System.out.println("Request " + currentRequest + ": Saved to cache. Total cached: " +
-                    mazeToSolMap.size());
+            System.out.println("Request " + currentRequest + ": Saved to cache. Total cached: " + mazeToSolMap.size());
 
             toClient.writeObject(solution);
             toClient.flush();
